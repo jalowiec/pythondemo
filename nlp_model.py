@@ -16,7 +16,7 @@ nlp = pl_core_news_sm.load()
 
 
 def prepare_sentiment_dataset(path):
-    df = pd.read_csv(POLISH_SENTIMENT_DATASET_PATH, sep=",")
+    df = pd.read_csv(path, sep=",")
     df.dropna(inplace=True)
     blanks = []
     for i, d, l, r in df.itertuples():
@@ -37,15 +37,15 @@ def train_sentiment_model(data_frame):
 def save_sentiment_model(model, path):
     dump(model, path)
 
+
 def get_sentiment_model(path):
-    model =  load(path)
-    print(model.predict("nie kupujcie"))
+    return load(path)
 
 
 if __name__ == '__main__':
     #df = prepare_sentiment_dataset(POLISH_SENTIMENT_DATASET_PATH)
     #model = train_sentiment_model(df)
     #save_sentiment_model(model, SAVED_MODEL_PATH)
-    model = get_sentiment_model(SAVED_MODEL_PATH)
-    #print(type(model))
-    #print(model.predict("nie kupujcie tych akcji bo słabe są"))
+    saved_model = get_sentiment_model(SAVED_MODEL_PATH)
+    print(saved_model.predict(["nie kupujcie tych akcji bo słabe są"]))
+    print(saved_model.predict(["Jestem tego samego zdania, chyba ze jeszcze jakieś niedobitki zostały i popuszcza w pampersy jak pójdzie wyżej. Ja wiem ze i tak lek działa, a w związku ze szczepionką procedurę przyspieszą bo sukces dla rzadu potrzebny w kraju j na świecie. \nZarobią tylko najwytrwalsi \nPozdro"]))
